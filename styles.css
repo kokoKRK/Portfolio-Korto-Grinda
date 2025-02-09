@@ -5,17 +5,50 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: #333;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 header {
     position: fixed;
     width: 100%;
-    background-color: #fff;
+    background-color: white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
+    padding: 0;
+}
+
+header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav {
+    position: relative;
+}
+
+.nav-toggle {
+    display: none;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #007bff;
+    z-index: 1001;
+    transition: color 0.3s;
+    padding: 5px;
+}
+
+.nav-toggle:hover {
+    color: #0056b3;
+}
+
+.nav-toggle.active {
+    transform: rotate(45deg); /* Fait tourner le "+" pour créer une croix */
 }
 
 nav ul {
@@ -32,12 +65,19 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     color: #333;
-    font-weight: bold;
+    font-weight: 600;
     transition: color 0.3s;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 nav ul li a:hover {
     color: #007bff;
+    font-weight: 600;
+}
+
+header.scrolled nav ul li a {
+    color: #333;
 }
 
 .hero {
@@ -47,7 +87,7 @@ nav ul li a:hover {
     justify-content: center;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('photo profil.jpg');
     background-size: cover;
-    background-position: center 20%;
+    background-position: center 18%;
     color: white;
     text-align: center;
 }
@@ -109,13 +149,24 @@ section h2 {
 }
 
 .technologies span {
-    display: inline-block;
-    background: #e9ecef;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8f9fa;
     color: #495057;
-    padding: 0.3rem 0.8rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 15px;
     font-size: 0.85rem;
     font-weight: 500;
+    transition: transform 0.2s ease;
+}
+
+.technologies span:hover {
+    transform: translateY(-2px);
+}
+
+.technologies span i {
+    font-size: 1rem;
 }
 
 .contact-info {
@@ -153,17 +204,68 @@ footer {
 }
 
 @media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
+    header {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .nav-toggle {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    nav {
+        min-height: 60px;
+        display: flex;
         align-items: center;
     }
 
+    nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: auto;
+        min-width: 200px;
+        padding: 0.8rem 0;
+        background-color: transparent;
+        position: absolute;
+        right: 1rem;
+        top: calc(100% + 10px);
+        border-radius: 12px;
+    }
+
+    nav ul.active {
+        display: flex;
+        background-color: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
     nav ul li {
-        margin: 0.5rem 0;
+        margin: 0.3rem 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        color: #333;
     }
 
     .hero-content h1 {
         font-size: 2rem;
+    }
+}
+
+/* Animation pour le menu déroulant */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
@@ -300,6 +402,8 @@ footer {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    position: relative;
+    padding-bottom: 3.5rem;
 }
 
 .veille-content h4 {
@@ -316,15 +420,15 @@ footer {
 }
 
 .veille-link {
+    position: absolute;
+    bottom: 1.5rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     color: #007bff;
     text-decoration: none;
     font-weight: 500;
-    margin-top: auto;
     transition: color 0.3s;
-    align-self: flex-start;
 }
 
 .veille-link:hover {
@@ -351,9 +455,27 @@ nav ul li a[href="#veille"] {
 }
 
 .veille-tags span {
-    background: #e9ecef;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8f9fa;
     color: #495057;
-    padding: 0.3rem 0.8rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 15px;
     font-size: 0.85rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+}
+
+.veille-tags span:hover {
+    transform: translateY(-2px);
+}
+
+.veille-tags span i {
+    font-size: 1rem;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 70px;
 } 
